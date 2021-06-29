@@ -68,15 +68,19 @@ Imagine you open a computer window that accepts instructions. You type into that
 
 The best analogy is probably real-time translation with human languages where a language interpreter can hear someone speak and translate what they say as they talk. One caveat: interpreters aren’t limited to one instruction at a time as typed by a person with pauses in between. They can be used to execute entire pre-typed files as well, one instruction being executed after the other. If interpreters couldn’t do this, they would be far less useful. 
 
+**Note**: How interpreters work behind the scenes is very complicated, and they don't always perform real-time translations. There is often some degree of preprocessing (or looking ahead)  
+
 “But how does an interpreter work?” you may ask. After all, if an interpreter is a program, someone had to use code to create it at some point. So how did they create the interpreter? We have a bit of a chicken and egg problem here. 
 
-We need to take a bit of a detour to understand what’s going on. Computers are physical devices that use electricity to store and manipulate information. I’m not very knowledgeable when it comes to physics. As far as I’m concerned, how computers accomplish this using electricity is some kind of black magic brought about by a deal with the devil. What’s important is the native language of computers is binary. All they know how to understand are streams of 1’s and 0’s represented by the presence or absence of electricity. All programming languages are, one way or another, converted into binary instructions so the computer can understand it in its “native tongue” so to speak. 
+We need to take a bit of a detour to understand what’s going on. Computers are physical devices that use electricity to store and manipulate information. I’m not very knowledgeable when it comes to physics. As far as I’m concerned, how computers accomplish this using electricity is magic. What’s important is the native language of computers is binary. All they know how to understand are streams of 1’s and 0’s represented by the presence or absence of electricity. All programming languages are, one way or another, converted into binary instructions so the computer can understand it in its “native tongue” so to speak. 
 
 In the case of interpreted languages, our code is deconstructed by the interpreter and the product of that deconstruction eventually executes on the computer’s processor. But this adds an extra step. Couldn’t we just cut out the middleman and go straight from code to binary? The answer is yes, we can. Languages that do this are called **compiled** languages, and the programs that convert **source code** into machine code are called **compilers**. The process of converting source code to machine code is known as **compilation**. 
 
 Why not always use compiled languages, then? Like everything in programming, there’s a trade off. Compiling a program can take a long time – up to several hours for the Linux kernel, Firefox, Chromium, and other large C programs. Additionally, compiled programs typically need to have their code compiled in advance, with the exception of just-in-time (JIT) compilation. This isn’t the case for an interpreted language since instructions are executed one at a time as they are fed to the interpreter. The benefit of compiled languages, though, is that their programs run significantly faster after the compilation process is finished. Virtually all applications where speed is highly important, like operating systems, are written in compiled languages like C and C++. 
 
-Ok, great, but this still doesn’t solve our chicken and egg problem. Compilers and interpreters are both kinds of programs presumably written in some kind of programming language, so how did we get them in the first place? The answer sends chills down my spine: **_there are people who have written compilers using assembly (glorified binary)_**. Doing something like that is a monumental but absolutely necessary task, because there’s simply no other option. The good news is that once we have a working compiler for a high-level language like C or Rust, we can make everything else (including interpreters and even other compilers) with our newly “unlocked” high-level language. 
+The main takeaway here is that compiled languages do their "translation" in advance. It's more effort upfront, but it has its benefits. 
+
+Ok, great, but this still doesn’t solve our chicken and egg problem. Compilers and interpreters are both kinds of programs presumably written in some kind of programming language, so how did we get them in the first place? The answer sends chills down my spine: **_there are people who have written compilers using assembly (glorified binary)_**. Doing something like that is a monumental but absolutely necessary task, because there’s simply no other option. The good news is that once we have a working compiler for a high-level language like C or Rust, we can make everything else (including interpreters and even other compilers) with our newly “unlocked” high-level language (for those interested in learning more, you may want to research the topic of [bootstrapping a compiler](https://en.wikipedia.org/wiki/Bootstrapping_(compilers)) 
 
 Finally, let’s look at Java. It’s special. It uses a compiler, but the Java compiler doesn’t convert Java code into machine language. Instead, it converts it into something known as **Java byte code**. This Java byte code is then run by the **Java Virtual Machine (JVM)**. “This sounds like an interpreter, but with extra steps” I hear you say. And you’re right. The idea is similar (but not the same). The difference here is that we still get a performance boost by doing this compared to if Java was an interpreted language. The JVM is pretty fast, and many other languages such as Kotlin and Clojure now convert their code to Java byte code so it can run on the JVM. We won’t get into the exact reasons why, but by compiling byte code rather than machine code, our Java applications can be run on many different types of systems without changing our code in any way. This is known as **portability**.
 
@@ -86,7 +90,7 @@ The rationale for using Java comes down to a combination of business needs and t
 
 With powerful corporate entities behind these programming languages, developers (and other companies) can have a high degree of confidence that the software they build will work as intended and continue to work in the future. If developers encounter bugs with the programming language tools they rely on or the execution environments for these languages, the companies backing them have the resources to resolve them quickly. Can the same things be said about languages with less resources such as Ruby or the esoteric language known as [BrainFuck](https://en.wikipedia.org/wiki/Brainfuck)? 
 
-Now on to the technical side of things. Java is an excellent candidate for making enterprise software where dozens or even hundreds of people are all working on a single, large code base. It’s often not the first choice when making a prototype, and it’s (fortunately) no longer seen as a first choice for web development. Java is also often rightfully criticized for being overly verbose: what could be accomplished in 50 lines of JavaScript might take 500 in Java. 
+Now on to the technical side of things. Java is an excellent candidate for making enterprise software where dozens or even hundreds of people are all working on a single, large code base. It’s often not the first choice when making a prototype, and it’s (fortunately) no longer seen as a first choice for web development. Java is also often rightfully criticized for being overly verbose: what could be accomplished in 50 lines of JavaScript might take 250 in Java. 
 
 Despite this, Java has proven itself to be reliable and has been the world’s most popular programming language on more than one occasion, so it must be doing something right. 
 
@@ -110,14 +114,14 @@ Much like in math, we can define **variables** and perform **operations** on tho
 
 | Keyword | Type | Size(bytes) | Minimum value | Maximum value |
 |--|--|--|--|--|
-| byte | integer number | 1 | -128 | 127 |
-| short | integer number | 2 | -32,768 | 32,767 |
-| int | integer number | 4 | -2,147,483,648 | 2,147,483,647 |
-| long | integer number | 8 | -9,223,372,036,854,775,808 | 9,223,372,036,854,775,807 |
-| char | Unicode character | 2 | 0 | 65535 |
-| float | floating point number | 4 | 1.4 * 10^-45 | 3.4028235 * 10^38 |
-| double | floating point number | 8 | 4.9 * 10^-324 | 1.7976931348623157 * 10^308 |
-| boolean | True\false value | Undefined | N/A | N/A |
+| **byte** | integer number | 1 | -128 | 127 |
+| **short** | integer number | 2 | -32,768 | 32,767 |
+| **int** | integer number | 4 | -2,147,483,648 | 2,147,483,647 |
+| **long** | integer number | 8 | -9,223,372,036,854,775,808 | 9,223,372,036,854,775,807 |
+| **char** | Unicode character | 2 | 0 | 65535 |
+| **float** | floating point number | 4 | 1.4 * 10^-45 | 3.4028235 * 10^38 |
+| **double** | floating point number | 8 | 4.9 * 10^-324 | 1.7976931348623157 * 10^308 |
+| **boolean** | True\false value | Undefined | N/A | N/A |
 
 Ok, so we have multiple kinds of data, but the difference seems pretty trivial. Some types consume more computer memory (bytes) than others, but can store larger or smaller values as a result. Why not always use double or long since they can store the largest numbers? After all, a few bytes isn’t a big deal.
 
@@ -135,56 +139,67 @@ Also, just an aside. If you’re familiar with them, strings _**are not**_ primi
 
 | Operator name | Operator symbol | Number of inputs | Number of outputs | Output type |
 |--|--|--|--|--|
-| Assignment | = | 2 (binary) | 0 | N/A |
-| Addition | + | 2 (binary) | 1 | numeric/varies |
-| Subtraction | - | 2 (binary) | 1 | numeric/varies |
-| Multiplication | * | 2 (binary) | 1 | numeric/varies |
-| Division | / | 2 (binary) | 1 | numeric/varies |
-| Addition assignment | += | 2 (binary) | 0 | N/A |
-| Subtraction assignment | -= | 2 (binary) | 0 | N/A |
-| Multiplication assignment | *= | 2 (binary) | 0 | N/A |
-| Division assignment | /= | 2 (binary) | 0 | N/A |
-| Modulus assignment | %= | 2 (binary) | 0 | N/A |
-| Increment | ++ | 1 (unary) | 1 | numeric/varies |
-| Decrement | -- | 1 (unary) | 1 | numeric/varies |
-| Greater than | > | 2 (binary) | 1 | boolean |
-| Greater than or equal to | >= | 2 (binary) | 1 | boolean |
-| Less than | < | 2 (binary) | 1 | boolean |
-| Less than or equal to | <= | 2 (binary) | 1 | boolean |
-| Equals | == | 2 (binary) | 1 | boolean |
-| Not Equals | != | 2 (binary) | 1 | boolean |
-| Logical AND | && | 2 (binary) | 1 | boolean |
-| Logical OR | \|\| | 2 (binary) | 1 | boolean |
-| Negation (Logical NOT) | ! | 1 (unary) | 1 | boolean |
-| Ternary operator | ? | 3 (ternary) | 1 | varies |
+| **Assignment** | = | 2 (binary) | 0 | N/A |
+| **Addition** | + | 2 (binary) | 1 | numeric/varies |
+| **Subtraction** | - | 2 (binary) | 1 | numeric/varies |
+| **Multiplication** | * | 2 (binary) | 1 | numeric/varies |
+| **Division** | / | 2 (binary) | 1 | numeric/varies |
+| **Addition assignment** | += | 2 (binary) | 0 | N/A |
+| **Subtraction assignment** | -= | 2 (binary) | 0 | N/A |
+| **Multiplication assignment** | *= | 2 (binary) | 0 | N/A |
+| **Division assignment** | /= | 2 (binary) | 0 | N/A |
+| **Modulus assignment** | %= | 2 (binary) | 0 | N/A |
+| **Increment** | ++ | 1 (unary) | 1 | numeric/varies |
+| **Decrement** | -- | 1 (unary) | 1 | numeric/varies |
+| **Greater than** | > | 2 (binary) | 1 | boolean |
+| **Greater than or equal to** | >= | 2 (binary) | 1 | boolean |
+| **Less than** | < | 2 (binary) | 1 | boolean |
+| **Less than or equal to** | <= | 2 (binary) | 1 | boolean |
+| **Equals** | == | 2 (binary) | 1 | boolean |
+| **Not Equals** | != | 2 (binary) | 1 | boolean |
+| **Logical AND** | && | 2 (binary) | 1 | boolean |
+| **Logical OR** | \|\| | 2 (binary) | 1 | boolean |
+| **Negation (Logical NOT)** | ! | 1 (unary) | 1 | boolean |
+| **Ternary operator** | ? | 3 (ternary) | 1 | varies |
 
 The information presented in the table is somewhat abstract. Let’s try and give some concrete examples of how we could actually use this information in a program. In the following sections, you will find an example of every operation and every data type. Code following two slashes is **commented** (ignored by Java) and I’ve highlighted it in green.
 
 ### Assignment Operator & Basic Math Functions
 
-When it comes to creating variables in a program, there is some special vocabulary you may need to be aware of depending on your professor. In the code int x; , we say that x has been **declared**, but not **initialized**. **Initialization** is the process of giving an undefined variable a value for the first time (x = 5; would be an example in our case). **Assignment** refers to giving a variable a value, _even if_ it already has one. _Initialization is a specific type of assignment_. In the code comments below, there are examples of each.
+When it comes to creating variables in a program, there is some special vocabulary you should be aware of. In the code int x; , we say that x has been **declared**, but not **initialized**. **Initialization** is the process of giving an undefined variable a value for the first time (x = 5; would be an example in our case). **Assignment** refers to giving a variable a value, _even if_ it already has one. _Initialization is a specific type of assignment_. In the code comments below, there are examples of each.
 
 **Note**: All numeric values including chars have a default value of 0 (or 0.0) and booleans default to false. Objects (including Strings) have a default value of null. Both objects and null will be covered later.
 
 ```java
 double pi; //Variable **declaration** without assigning a value
+
 pi = 3.415926; //Variable **initialization**
+
 int radius = 2; //Declaration and initialization at the same time
+
 double area = radius * radius * pi;
+
 area = 0; // **Assignment**
+
 int r = 20 % 7; //The % symbol (modulus operator) gives us the remainder of a division. 20 / 7 = 2 remainder 6. Therefore, r = 6.
+
 int x = 3 + 2;
+
 int y = 3 – 2;
+
 int z = x / 2; //The result is 2, despite x being equal to 5. See explanation below.
+
 double divisionResult = 5D / 2D; //The “D” after 5 and 2 signify that they are doubles. In this case, the result is actually 2.5 since we aren’t using truncated division. Non-decimal numbers without a D or F are interpreted as some kind of integer number. Additionally, “L” signifies a long (kind of whole number as seen in previous chart). D, F, and L can be upper- or lower-case.
+
 divisionResult = divisionResult - 1F;  //Subtraction and variable **assignment**.
 ```
+
 In Java, all _integer_ division (though not decimal division) is **truncated**, meaning the decimal part of the result of our division operation is simply ignored. If we needed to get the remainder of our division operation, we would need to use the modulus (%) operator. Note: modulus doesn’t return the numbers after the decimal point, but rather the _**remainder**_ of a division operation.
 
 
 ### Alternate Assignment Operators
 
-+= , -=, *=, /=, and %= are all just shorthand operators. Java would be a complete language without them, but they’re nice to have. If we wanted to say x = x * 5, we can instead say x *= 5. Or if we wanted to say y = y / 5, we could instead use y /= 5. We can even do x %= 5. Pretty self-explanatory.
++= , -=, *=, /=, and %= are all just shorthand operators. Java would be a complete language without them, but they’re nice to have. If we wanted to say x = x * 5, we can instead say x *= 5. Or if we wanted to say y = y / 5, we could instead use y /= 5. We can even do x %= 5. There are pretty self-explanatory.
 
 ### Increment & Decrement
 
@@ -192,9 +207,13 @@ Increment and decrement do what you would expect them to do. They take a single 
 
 ```java
 int x = 5;
+
 x++; //x is now equal to 6
+
 ++x; //x is now equal to 7
+
 x--; //x is now equal to 6
+
 --x; //x is now equal to 5
 ```
 
@@ -215,9 +234,13 @@ One interesting thing to note about the increment and decrement operators is tha
 Java allows us to compare numbers using the > (greater than), < (less than), >= (greater than or equal to), and <= (less than or equal to) operators. Here are some examples:
 
 ```java
+
 boolean b1 = 5 > 5; //b1 = false
+
 boolean b2 = 5 >= 5; //b2 = true
+
 boolean b3 = 5 < 6; //b3 = true
+
 boolean b4 = 1 >= 0; //b4 = true
 ```
 
@@ -231,6 +254,7 @@ Negation takes whatever you put into it and gives you the opposite.
 
 ```java
 boolean var1 = true;
+
 boolean var2 = !var1; //Since var1 was true, var2 is now false.
 ```
 
@@ -253,9 +277,7 @@ The not equals operator also acts on two booleans, but gives you the opposite of
 int x = 5;
 int y = 5;
 boolean someBool = (x != y);  //someBool = false.
-```
-
-  
+```  
 
 ### Logical AND
 
@@ -272,12 +294,19 @@ Logical AND only gives us a value of true when **both** of the inputs we give it
 
 ```java
 boolean b1 = true;
+
 boolean b2 = true;
+
 boolean b3 = false;
+
 boolean b4 = false;
+
 boolean result1 = b1 && b2 //result1 = true
+
 boolean result2 = b1 && b3 //result2 = false
+
 boolean result3 = b3 && b4 //result3 = false
+
 ```
 
 ### Logical OR
