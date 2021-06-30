@@ -24,6 +24,32 @@ This book is licensed under the CC BY-NC-SA license, a kind of copyleft license.
 
 We are better off in a world where the gatekeeping of academic and scientific knowledge does not exist.
 
+## Index
+[Chapter I: Introduction to Java (Optional)](#chapter-i-introduction-to-java-optional)
+
+[Chapter II: Arithmetic, Variables & Operators](#chapter-ii-arithmetic-variables--operators)
+
+[Chapter III: Expressions & Order of Operations](#chapter-iii-expressions--order-of-operations)
+
+[Chapter IV: Our First Working Program, Classes, Methods, & Method Overloading](#chapter-iv-our-first-working-program-classes-methods--method-overloading)
+
+[Chapter V: public static void main(String[] args)](#chapter-v-public-static-void-mainstring-args)
+
+[Chapter VI: Loops](#chapter-vi-loops)
+
+[Chapter VII: Control Statements & Enumerated Types](#chapter-vii-control-statements--enumerated-types)
+
+[Chapter VIII: The Foundations of OOP](#chapter-viii-the-foundations-of-oop)
+
+[Chapter IX: Interfaces & Abstract Classes](#chapter-ix-interfaces--abstract-classes)
+
+[Chapter X: Packages](#chapter-x-packages)
+
+[Chapter XI: Data Structures](#chapter-xi-data-structures)
+
+[Chapter XII: Exceptions](#chapter-xii-exceptions)
+
+[Chapter XIII: Tips & Tricks](#chapter-xiii-tips--tricks)
 
 ## Chapter I: Introduction to Java (Optional)
 
@@ -127,14 +153,13 @@ Ok, so we have multiple kinds of data, but the difference seems pretty trivial. 
 
 Whenever you’re dealing with thousands or hundreds of thousands or millions of numbers like in machine learning, those few bytes make a huge difference. However, if you’re using a few integers here and there to perform simple calculations where you could have used bytes, it really isn’t a big deal. You definitely won’t encounter encounter machine learning or massive data sets in Programming I, so you can safely use larger data types such as  integers, doubles, or whatever you please unless your assignment or professor tells you otherwise.
 
-I would strongly recommend that people learning to program for the first time stick to using the larger data types simply because there are already so many other things to juggle. Worrying about whether or not your data can fit inside of the data type you choose to use adds needless complexity.
+I would strongly recommend that people learning to program for the first time stick to handful of general-purpose data types simply because there are already so many other things to juggle. Worrying about whether or not your data can fit inside of the data type you choose to use adds needless complexity. Additionally, the smaller data types such as byte tend to be used very rarely in practice. int, double, and boolean are the most common by far.
 
 Now, on to the specifics of some of the data types. One thing to consider when using doubles and floats is **precision**. You’ll learn about the why and how in Computer Organization, but doubles are more precise than floats. The more space a decimal number occupies in memory, the greater capacity for accuracy it has.
 
 “Why does the boolean type have an undefined size?” That’s a good question, but the answer isn’t particularly satisfying. Oracle, the company behind Java, decided leave the question of how much space a boolean should occupy up to the people who make various versions of the Java Virtual Machine (JVM), the environment where Java code is executed. There is no single standard for its size.
 
-Also, just an aside. If you’re familiar with them, strings _**are not**_ primitive data types. Java treats them kind of like primitives in terms of syntax, but they’re not the same thing. Strings are actually objects, which you’ll learn about in a later chapter. However, strings are discussed briefly at the end of this section.
-
+Also, just an aside. If you’re familiar with them, strings _**are not**_ primitive data types. Java treats them kind of like primitives in terms of syntax, but they’re not the same thing. Strings are actually objects, which we’ll learn about later.
 ### Operators
 
 | Operator name | Operator symbol | Number of inputs | Number of outputs | Output type |
@@ -168,7 +193,7 @@ The information presented in the table is somewhat abstract. Let’s try and giv
 
 When it comes to creating variables in a program, there is some special vocabulary you should be aware of. In the code int x; , we say that x has been **declared**, but not **initialized**. **Initialization** is the process of giving an undefined variable a value for the first time (x = 5; would be an example in our case). **Assignment** refers to giving a variable a value, _even if_ it already has one. _Initialization is a specific type of assignment_. In the code comments below, there are examples of each.
 
-**Note**: All numeric values including chars have a default value of 0 (or 0.0) and booleans default to false. Objects (including Strings) have a default value of null. Both objects and null will be covered later.
+**Note**: All numeric values including chars have a default value of 0 (or 0.0 for floating point number) and booleans default to false. Objects (including Strings) have a default value of null. Both objects and null will be covered later.
 
 ```java
 double pi; //Variable **declaration** without assigning a value
@@ -194,7 +219,7 @@ double divisionResult = 5D / 2D; //The “D” after 5 and 2 signify that they a
 divisionResult = divisionResult - 1F;  //Subtraction and variable **assignment**.
 ```
 
-In Java, all _integer_ division (though not decimal division) is **truncated**, meaning the decimal part of the result of our division operation is simply ignored. If we needed to get the remainder of our division operation, we would need to use the modulus (%) operator. Note: modulus doesn’t return the numbers after the decimal point, but rather the _**remainder**_ of a division operation.
+In Java, all _integer_ division (though not decimal division) is **truncated**, meaning the decimal part of the result of our division operation is simply ignored. If we needed to get the remainder of our division operation, we would need to use the modulus (%) operator. **Note**: modulus doesn’t return the numbers after the decimal point, but rather the _**remainder**_ of a division operation.
 
 
 ### Alternate Assignment Operators
@@ -262,11 +287,10 @@ boolean var2 = !var1; //Since var1 was true, var2 is now false.
 
 The equality operator checks if two values are equal.
 
-
 ```java
 int x = 5;
 int y = 5;
-boolean someBool = (x == y);  //someBool = true, since x and y are the same value. Parenthesis not needed, but makes it more clear and is good practice to use most of the time.
+boolean someBool = (x == y);  //someBool = true, since x and y are the same value. Parenthesis not needed, but makes it more clear what's going on
 ```
 
 ### Not equals
@@ -1607,7 +1631,7 @@ switch(book){
 }
 ```
 
-## Chapter VII: The Foundations of OOP
+## Chapter VIII: The Foundations of OOP
 
 Up this point, all of the topics covered have been more or less universal across modern programming languages. The things covered in this chapter are specific to object-oriented programming and are among the most difficult subjects in OOP.
 
